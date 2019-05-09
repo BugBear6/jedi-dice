@@ -1,3 +1,10 @@
+.jedi-dice {
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+
 .dice-select-list {
 	padding-top: 20px;
 	display: grid;
