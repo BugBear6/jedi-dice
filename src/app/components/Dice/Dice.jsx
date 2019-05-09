@@ -1,13 +1,13 @@
 import React from 'react';
 import './Dice.scss';
-import ab from 'ab.png';
-import boost from 'boost.png';
-import ch from 'ch.png';
-import d10 from 'd10.png';
-import dif from 'dif.png';
-import force from 'force.png';
-import prof from 'prof.png';
-import setback from 'setback.png';
+import ab from '../../../img/dices/ab.png';
+import boost from '../../../img/dices/boost.png';
+import ch from '../../../img/dices/ch.png';
+import d10 from '../../../img/dices/d10.png';
+import dif from '../../../img/dices/dif.png';
+import force from '../../../img/dices/force.png';
+import prof from '../../../img/dices/prof.png';
+import setback from '../../../img/dices/setback.png';
 
 const dicesImg = {
 	ab,
@@ -20,28 +20,37 @@ const dicesImg = {
 	setback
 };
 
+const DiceCounter = ({count}) => (
+	<div className="dice__counter">{count}</div>
+);
+
 export default ({diceType, selectDice, dicesSelected}) => {
+	const imgTypeName = diceType.toLowerCase();
 	const indexOfType = dicesSelected.findIndex(el => el.diceType === diceType);
-	const count = dicesSelected[indexOfType].times;
+	var count
+	if (indexOfType > -1) {
+		count = dicesSelected[indexOfType].times;
+	} else {
+		count = null;
+	}
+
+	console.log('count', count)
 
 	return (
-		<div>
-		<div 
-			onClick={selectDice(diceType)}
-			className={diceType}>{diceType}
-			<img
-				className="dice-img"
-				src={dicesImg[diceType]}
-				alt={diceType} />;
+		<div className="dice__holder">
+			<div 
+				onClick={() => selectDice(diceType)}>
+				<img
+					className="dice__img"
+					src={dicesImg[imgTypeName]}
+					alt={diceType} />
+			</div>
+			{
+				count && <DiceCounter count={count} />
+			}
 		</div>
-		{
-			count && <diceCounter count={count} />
-		}
-	</div>
 	);
 };
 
-diceCounter = count => (
-	<div className="dice-counter">{count}</div>
-);
+
 

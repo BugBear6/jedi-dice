@@ -8,17 +8,6 @@
  *   setback.roll().times(1);
  */
 
-const classes = {
-	Dice,
-	Setback,
-	Boost,
-	Ab,
-	Dif,
-	Prof,
-	Ch,
-	Force,
-	D10
-};
 
 function buildDice(diceType) {
 	return new classes[diceType]();
@@ -170,12 +159,24 @@ class Force extends Dice {
 	}
 }
 
-
 // d10
 class D10 extends Dice {
 	constructor() {
 		super(10);
 	}
 }
+
+const classes = {
+	Dice,
+	Setback,
+	Boost,
+	Ab,
+	Dif,
+	Prof,
+	Ch,
+	Force,
+	D10
+};
+
 
 export default buildDice;

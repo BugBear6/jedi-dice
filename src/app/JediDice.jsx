@@ -1,7 +1,7 @@
 import React from 'react';
 import './JediDice.scss';
 import Dice from './components/Dice/Dice';
-import DiceBuilder from '../utils/DiceBuilder';
+import buildDice from '../utils/DiceBuilder';
 
 class JediDice extends React.Component {
 	constructor(props) {
@@ -23,8 +23,8 @@ class JediDice extends React.Component {
 		'D10'
 	];
 
-	selectDice(diceType) {
-		console.log('selectDice')
+	selectDice = (diceType) => {
+		console.log('selectDice', this)
 		const dicesSelectedCopy = [...this.state.dicesSelected];
 		const indexOfType = dicesSelectedCopy.findIndex(el => el.diceType === diceType);
 		if (indexOfType > -1) {
@@ -40,9 +40,9 @@ class JediDice extends React.Component {
 		});
 	}
 
-	roll() {
+	roll = () => {
 		const rollResult = this.state.dicesSelected.reduce((total, diceObj )=> {
-			const dice = DiceBuilder.buildDice(diceObj.diceType);
+			const dice = buildDice(diceObj.diceType);
 			const result =  dice.roll().times(diceObj.times);
 			return total + result;
 		}, '')
@@ -53,7 +53,7 @@ class JediDice extends React.Component {
 		});
 	}
 
-	reset() {
+	reset = () => {
 		console.log('reset')
 		this.setState({
 			rollResult: {},
@@ -64,11 +64,9 @@ class JediDice extends React.Component {
 	render() {
 		return (
 			<div className="jedi-dice">
-				<header className="App-header">
-				</header>
 				<div className="dice-select-list">
-					(
-						diceTypes.map((diceType, index) => (
+					{
+						this.diceTypes.map((diceType, index) => (
 							<Dice
 								key={index}
 								diceType={diceType}
@@ -76,12 +74,16 @@ class JediDice extends React.Component {
 								dicesSelected={this.state.dicesSelected}>
 							</Dice>
 						))
-					)
+					}
 				</div>
-				<div>
+				<div className="buttons-bar">
 					<button
-						className="button roll-button"
-						onClick={this.roll()}>Roll</button>
+						className="button button--roll"
+						onClick={this.roll}>Roll</button>
+
+					<button
+						className="button button--reset"
+						onClick={this.reset}>Reset</button>
 				</div>
 			</div>
 		);
