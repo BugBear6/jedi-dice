@@ -8,16 +8,7 @@ class JediDice extends React.Component {
 		super(props);
 		this.state = {
 			rollResult: {},
-			dicesSelected: {
-				Setback: 0,
-				Boost: 0,
-				Ab: 0,
-				Dif: 0,
-				Prof: 0,
-				Ch: 0,
-				Force: 0,
-				D10: 0
-			}
+			dicesSelected: []
 		};
 	}
 
@@ -34,27 +25,23 @@ class JediDice extends React.Component {
 
 	selectDice(diceType) {
 		console.log('selectDice')
-		const dicesSelectedCopy = Object.assign({}, this.state);
-		dicesSelectedCopy[diceType] = Number(dicesSelectedCopy[diceType]) + 1
+		const dicesSelectedCopy = [...this.state.dicesSelected];
+		const indexOfType = dicesSelectedCopy.findIndex(el => el.diceType === diceType);
+		if (indexOfType > -1) {
+			dicesSelectedCopy[indexOfType].times += 1
+		} else {
+			dicesSelectedCopy.push({
+				diceType,
+				times: 1
+			});
+		}
 		this.setState({
 			dicesSelected: dicesSelectedCopy
 		});
 	}
 
 	roll() {
-		// map into array of objects
-		const dicesArray = Object.keys(this.state.dicesSelected).map((key) => {
-			return {
-				diceType: key,
-				times: dicesSelected[key]
-			};
-		});
-
-		// filter non selected
-		const dicesSelected = dicesArray.filter(diceObj => diceObj.times);
-
-		// build dices and roll them
-		const rollResult = dicesSelected.reduce((total, diceObj )=> {
+		const rollResult = this.state.dicesSelected.reduce((total, diceObj )=> {
 			const dice = DiceBuilder.buildDice(diceObj.diceType);
 			const result =  dice.roll().times(diceObj.times);
 			return total + result;
@@ -70,8 +57,8 @@ class JediDice extends React.Component {
 		console.log('reset')
 		this.setState({
 			rollResult: {},
-			dicesSelected: {}
-		})
+			dicesSelected: []
+		});
 	}
 
 	render() {
