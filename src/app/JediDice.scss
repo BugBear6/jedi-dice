@@ -1,8 +1,10 @@
 .jedi-dice {
+	max-width: 800px;
 	height: 100vh;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
+	position: relative;
 }
 
 .dice-select-list {

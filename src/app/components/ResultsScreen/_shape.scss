@@ -1,0 +1,76 @@
+.shape {
+	&--square {
+		width: 100px;
+		height: 100px;
+		background: red;
+	}
+
+	&--pentagon {
+		position: relative;
+		width: 54px;
+		box-sizing: content-box;
+		border-width: 50px 18px 0;
+		border-style: solid;
+		border-color: red transparent;
+
+		&:before {
+			content: "";
+			position: absolute;
+			height: 0;
+			width: 0;
+			top: -85px;
+			left: -18px;
+			border-width: 0 45px 35px;
+			border-style: solid;
+			border-color: transparent transparent red;
+		}
+	}
+
+	&--triangle-up {
+		width: 0;
+		height: 0;
+		border-left: 50px solid transparent;
+		border-right: 50px solid transparent;
+		border-bottom: 100px solid red;
+	}
+
+	&--diamond {
+		width: 0;
+		height: 0;
+		border: 50px solid transparent;
+		border-bottom-color: red;
+		position: relative;
+		top: -50px;
+
+		&:after {
+			content: '';
+			position: absolute;
+			left: -50px;
+			top: 50px;
+			width: 0;
+			height: 0;
+			border: 50px solid transparent;
+			border-top-color: red;
+		}
+	}
+
+	&--diamond-narrow {
+		width: 0;
+		height: 0;
+		border: 50px solid transparent;
+		border-bottom: 70px solid red;
+		position: relative;
+		top: -50px;
+
+		&:after {
+			content: '';
+			position: absolute;
+			left: -50px;
+			top: 70px;
+			width: 0;
+			height: 0;
+			border: 50px solid transparent;
+			border-top: 70px solid red;
+		}
+	}
+}

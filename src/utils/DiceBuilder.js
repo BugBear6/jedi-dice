@@ -6,35 +6,40 @@
  *   setback.rollOnce();
  *   OR
  *   setback.roll().times(1);
+ * 3. D10 will generate results from 0-9 on purpose
+ * 4. Currently there is no option for range from 1.
  */
 
-
 function buildDice(diceType) {
-	return new classes[diceType]();
+	return new classes[diceType](diceType);
 }
 
 class Dice {
-	constructor(max = 6) {
+	constructor(max = 6, diceType) {
 		this._max = max;
+		this.diceType = diceType;
 		this._rollMap = null;
 	}
 	rollOnce() {
 		const numberRolled = Math.floor((Math.random() * this._max));
-		return this._rollMap ? this._rollMap[numberRolled] : (numberRolled + 1);
+		return {
+			result: this._rollMap ? this._rollMap[numberRolled] : numberRolled,
+			diceType: this.diceType
+		};
 	}
 	roll() {
 		return this;
 	}
 	times(xTimes) {
 		const rolls = new Array(xTimes).fill(0).map(() => this.rollOnce());
-		return rolls.join(',').replace(/,,/g, ',');
+		return rolls;
 	}
 }
 
 // Setback
 class Setback extends Dice {
-	constructor() {
-		super(6);
+	constructor(diceType) {
+		super(6, diceType);
 		this._rollMap = {
 			0: 'blank',
 			1: 'blank',
@@ -48,8 +53,8 @@ class Setback extends Dice {
 
 // Boost
 class Boost extends Dice {
-	constructor() {
-		super(6);
+	constructor(diceType) {
+		super(6, diceType);
 		this._rollMap = {
 			0: 'blank',
 			1: 'blank',
@@ -63,8 +68,8 @@ class Boost extends Dice {
 
 // Ability
 class Ab extends Dice {
-	constructor() {
-		super(8);
+	constructor(diceType) {
+		super(8, diceType);
 		this._rollMap = {
 			0: 'blank',
 			1: 'success',
@@ -80,8 +85,8 @@ class Ab extends Dice {
 
 // Dificulty
 class Dif extends Dice {
-	constructor() {
-		super(8);
+	constructor(diceType) {
+		super(8, diceType);
 		this._rollMap = {
 			0: 'blank',
 			1: 'failure',
@@ -98,8 +103,8 @@ class Dif extends Dice {
 
 // Proficiency
 class Prof extends Dice {
-	constructor() {
-		super(12);
+	constructor(diceType) {
+		super(12, diceType);
 		this._rollMap = {
 			0: 'blank',
 			1: 'success',
@@ -107,9 +112,9 @@ class Prof extends Dice {
 			3: 'success,success',
 			4: 'success,success',
 			5: 'advantage',
-			6: 'success,advatage',
-			7: 'success,advatage',
-			8: 'success,advatage',
+			6: 'success,advantage',
+			7: 'success,advantage',
+			8: 'success,advantage',
 			9: 'advantage,advantage',
 			10: 'advantage,advantage',
 			11: 'triumph'
@@ -119,8 +124,8 @@ class Prof extends Dice {
 
 // Challenge
 class Ch extends Dice {
-	constructor() {
-		super(12);
+	constructor(diceType) {
+		super(12, diceType);
 		this._rollMap = {
 			0: 'blank',
 			1: 'failure',
@@ -140,8 +145,8 @@ class Ch extends Dice {
 
 // Force
 class Force extends Dice {
-	constructor() {
-		super(12);
+	constructor(diceType) {
+		super(12, diceType);
 		this._rollMap = {
 			0: 'dark',
 			1: 'dark',
@@ -161,8 +166,8 @@ class Force extends Dice {
 
 // d10
 class D10 extends Dice {
-	constructor() {
-		super(10);
+	constructor(diceType) {
+		super(10, diceType);
 	}
 }
 

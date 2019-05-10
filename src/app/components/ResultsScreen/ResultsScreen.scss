@@ -1,0 +1,52 @@
+@import 'shape';
+
+.results-screen {
+	position: absolute;
+	background: black;
+	opacity: .7;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	z-index: 20;
+	&__dice-rolled {
+
+	}
+	&__rolled {
+		list-style: none;
+		display: flex;
+	}
+	&__final {
+		list-style: none;
+		display: flex;
+	}
+}
+
+.dice-type {
+	color: #fff;
+	&--boost {
+		background: lightblue;
+	}
+	&--setback {
+		background: black;
+	}
+	&--ab {
+
+	}
+	&--ch {
+
+	}
+	&--d10 {
+		background: violet;
+	}
+	&--dif {
+		background: darkblue;
+	}
+	&--prof {
+
+	}
+	&--force {
+
+	}
+}
+

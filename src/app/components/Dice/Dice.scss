@@ -3,6 +3,7 @@ $counter-size: 40px;
 
 
 .dice {
+	cursor: pointer;
 	&__holder {
 		position: relative;
 	}
@@ -31,3 +32,4 @@ $counter-size: 40px;
 		filter: drop-shadow(3px 4px 4px #222);
 	}
 }
+
