@@ -68,8 +68,9 @@ const FinalRolled = ({finalRolled}) => {
 	);
 };
 
-export default({rollResult}) => (
-	<div className="results-screen">
+export default({rollResult, closeResultsScreen}) => (
+	<div className="results-screen"
+		onClick={closeResultsScreen}>
 		<div className="results-screen__holder">
 			<ul className="results-screen__rolled">
 				{

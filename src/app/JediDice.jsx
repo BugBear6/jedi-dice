@@ -3,6 +3,7 @@ import './JediDice.scss';
 import Dice from './components/Dice/Dice';
 import buildDice from '../utils/DiceBuilder';
 import ResultsScreen from './components/ResultsScreen/ResultsScreen';
+import ButtonsBar from './components/ButtonsBar/ButtonsBar';
 
 class JediDice extends React.Component {
 	constructor(props) {
@@ -116,11 +117,17 @@ class JediDice extends React.Component {
 		});
 	}
 
+	closeResultsScreen = () => {
+		this.reset();
+	}
+
 	render() {
 		return (
 			<div className="jedi-dice">
 				{
-					this.state.rollResult.roll.length && <ResultsScreen rollResult={this.state.rollResult} />
+					(!!this.state.rollResult.roll.length) && <ResultsScreen
+						closeResultsScreen={this.closeResultsScreen}
+						rollResult={this.state.rollResult} />
 				}
 				<div className="dice-select-list">
 					{
@@ -129,20 +136,13 @@ class JediDice extends React.Component {
 								key={index}
 								diceType={diceType}
 								selectDice={this.selectDice}
-								dicesSelected={this.state.dicesSelected}>
-							</Dice>
+								dicesSelected={this.state.dicesSelected} />
 						))
 					}
 				</div>
-				<div className="buttons-bar">
-					<button
-						className="button button--roll"
-						onClick={this.rollDice}>Roll</button>
-
-					<button
-						className="button button--reset"
-						onClick={this.reset}>Reset</button>
-				</div>
+				<ButtonsBar
+					rollDice={this.rollDice}
+					reset={this.reset} />
 			</div>
 		);
 	}

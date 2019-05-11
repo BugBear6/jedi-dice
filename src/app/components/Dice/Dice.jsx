@@ -34,8 +34,6 @@ export default ({diceType, selectDice, dicesSelected}) => {
 		count = null;
 	}
 
-	console.log('count', count)
-
 	return (
 		<div className="dice__holder">
 			<div 

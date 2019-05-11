@@ -1,16 +1,14 @@
+@import '../../../scss/variables';
 
 $counter-size: 40px;
 
-
 .dice {
-	cursor: pointer;
 	&__holder {
 		position: relative;
+		cursor:pointer;
 	}
 	&__counter {
-		background: black;
-		color: white;
-		border-radius: 50%;
+		font-family: $font-button;
 		background: black;
 		color: white;
 		border-radius: 50%;
@@ -26,10 +24,11 @@ $counter-size: 40px;
 		z-index: 9;
 		right: 0;
 		bottom: 0px;
+		pointer-events: none;
 	}
 	&__img {
 		width: 80px;
-		filter: drop-shadow(3px 4px 4px #222);
+		filter: drop-shadow(4px 6px 6px #000);
 	}
 }
 
