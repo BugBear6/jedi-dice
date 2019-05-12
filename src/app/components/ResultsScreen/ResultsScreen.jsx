@@ -26,12 +26,13 @@ const getTypeClass = (diceType) => {
 
 const getClass = ({diceType, result}) => {
 	const type = getTypeClass(diceType);
-	const symbolsNumber = result.split(',').length > 1 ? 'symbols-double' : 'symbols-one';
+	const symbolsNumber = result.split && result.split(',').length > 1
+		? 'symbols-double'
+		: 'symbols-one';
 	return `${type} ${symbolsNumber}`;
 }
 
 const DiceRolled = ({dicesRolledArray}) => {
-	console.log('dicesRolledArray', dicesRolledArray)
 	return (
 		<>
 		{
@@ -41,11 +42,12 @@ const DiceRolled = ({dicesRolledArray}) => {
 					className={ `results-screen__dice-rolled ${getClass(diceRolled)}` } >
 					{
 						diceRolled.result.split(',').map((symbol, indexSymbol) => (
-							<img
+							diceRolled.diceType === 'D10' && diceRolled.result !== ''
+							? <span key={indexSymbol}>{symbol}</span>
+							: <img
 								className={`dice-type__symbol dice-type__symbol--${symbol}`}
 								key={indexSymbol}
-								src={symbolsImg[symbol]}
-							/>
+								src={symbolsImg[symbol]} />
 						))
 					}
 				</li>
@@ -55,14 +57,52 @@ const DiceRolled = ({dicesRolledArray}) => {
 	);
 };
 
-const FinalRolled = ({finalRolled}) => {
+const FinalSymbol = ({symbol, resultValue}) => {
 	return (
-		<li className="final-rolled">{finalRolled}</li>
+		<li className={ `final-rolled final-rolled--${symbol} final-rolled--${resultValue}` }>
+			<img
+				className={`final-rolled__symbol dice-type__symbol--${symbol}`}
+				alt={symbol}
+				title={symbol}
+				src={symbolsImg[symbol]} />
+			<span className="final-rolled__counter">{resultValue}</span>
+		</li>
 	);
+}
+
+const FinalD10 = ({resultValue}) => {
+	return (
+		resultValue.split(',').map((value, index) => (
+			<li
+				key={index}
+				className='final-rolled final-rolled--d10'>
+				<span>{value}</span>
+			</li>
+		))
+	);
+}
+
+const FinalRolled = ({symbol, resultValue}) => {
+	if (symbol === 'd10') {
+		if (resultValue !== '') {
+			return <FinalD10
+				resultValue={resultValue} />
+		}
+	} else {
+		return <FinalSymbol
+			symbol={symbol}
+			resultValue={resultValue} />
+	}
+	return null;
 };
 
 export default({rollResult, closeResultsScreen}) => (
-	<div className="results-screen"
+	<div className={
+		`results-screen
+		 results-screen--${rollResult.final.isSuccess ? 'success' : 'failure'}
+		 results-screen--${rollResult.final.onlyD10 ? 'only-d10' : ''}
+		 results-screen--${rollResult.final.onlyForce ? 'only-force' : ''}`
+	}
 		onClick={closeResultsScreen}>
 		<div className="results-screen__holder">
 			<ul className="results-screen__rolled">
@@ -74,14 +114,25 @@ export default({rollResult, closeResultsScreen}) => (
 					))
 				}
 			</ul>
+			{
+				(!rollResult.final.onlyD10 && !rollResult.final.onlyForce) && <div className="results-screen__msg">
+				{
+					rollResult.final.isSuccess
+					? <span>Success</span>
+					: <span>Failure</span>
+				}
+			</div>
+			}
+
 			<ul className="results-screen__final">
-				{/* {
-					rollResult.final.map((finalRolled, index) => (
+				{
+					Object.keys(rollResult.final.dices).map((symbol, index) => (
 						<FinalRolled
 							key={index}
-							finalRolled={finalRolled} />
+							symbol={symbol}
+							resultValue={rollResult.final.dices[symbol] } />
 					))
-				} */}
+				}
 			</ul>
 		</div>
 	</div>

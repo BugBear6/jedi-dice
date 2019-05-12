@@ -23,7 +23,7 @@ class Dice {
 	rollOnce() {
 		const numberRolled = Math.floor((Math.random() * this._max));
 		return {
-			result: this._rollMap ? this._rollMap[numberRolled] : numberRolled,
+			result: this._rollMap ? this._rollMap[numberRolled] : String(numberRolled),
 			diceType: this.diceType
 		};
 	}

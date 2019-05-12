@@ -1,27 +1,114 @@
+@import '../../../scss/variables';
+$counter-size: 33px;
+
+
 .results-screen {
 	position: absolute;
-	background: rgba(0, 0, 0, 0.8);
+	background: rgba(255, 255, 255, .9);
 	height: 100%;
 	width: 100%;
 	top: 0;
 	left: 0;
 	z-index: 20;
+	&--failure { background: rgba(133, 24, 24, .9); color: #fff; }
+	&--success { background: rgba(68, 148, 38, .9); }
+	&--only-d10 { background: rgba(0, 0, 0, .9); }
+	&--only-force { background: rgba(255, 255, 255, .9); }
 	&__holder {
-		padding: 30px 20px;
+		padding: 8px 8px;
 	}
 	&__rolled {
 		list-style: none;
 		display: grid;
-		grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+		grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+		@media (min-width: 560px) {
+			grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+		}
 	}
 	&__final {
 		list-style: none;
-		display: flex;
+		grid-row-gap: 10px;
+		grid-column-gap: 10px;
+		list-style: none;
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		@media (min-width: 560px) {
+			grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+		}
+	}
+	&__msg {
+		font-size: 50px;
+		font-family: $font-button;
 	}
 }
 
-$dice-size: 65px;
-$symbol-size: 27px;
+.final-rolled {
+	position: relative;
+	display: flex;
+    justify-content: center;
+	align-items: center;
+	border: 2px solid black;
+	color: black;
+	background: #fff;
+	&__symbol {
+		width: 75px;
+	}
+	&--totalFailure,
+	&--totalSuccess,
+	&--isSuccess,
+	&--0 {
+		display: none;
+	}
+	&--success {
+
+	}
+	&--failure {
+
+	}
+	&--threat {
+
+	}
+	&--triumph {
+
+	}
+	&--despair {
+
+	}
+	&--light {
+
+	}
+	&--dark {
+
+	}
+	&--d10 {
+		font-family: $font-button;
+		font-size: 52px;
+	}
+	&__counter {
+		font-family: $font-button;
+		background: #fff;
+		color: #000;
+		border: 1px solid #000;
+		border-radius: 50%;
+		display: inline-block;
+		position: absolute;
+		width: $counter-size;
+		height: $counter-size;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 25px;
+		font-weight: bold;
+		z-index: 9;
+		right: 2px;
+		bottom: 2px;
+		pointer-events: none;
+	}
+}
+
+
+$dice-size: 48px;
+$symbol-size: 19px;
 
 .dice-type {
 	color: #fff;
@@ -53,7 +140,7 @@ $symbol-size: 27px;
 	&--ab {
 		background-image: url('../../../img/dice-shapes/ab.png');
 		order: 3;
-		padding-top: 17px;
+		padding-top: 10px;
 	}
 	&--dif {
 		background-image: url('../../../img/dice-shapes/dif.png');
@@ -77,6 +164,8 @@ $symbol-size: 27px;
 	&--d10 {
 		background-image: url('../../../img/dice-shapes/d10.png');
 		order: 8;
+		font-size: 18px;
+		font-family: $font-button;
 	}
 	&.symbols-double {
 		&.dice-type--boost {
@@ -85,7 +174,7 @@ $symbol-size: 27px;
 		}
 		&.dice-type--ab,
 		&.dice-type--dif {
-			img { width: $symbol-size - 7px; }
+			img { width: $symbol-size - 3px; }
 			img:last-of-type { margin-top: -4px; }
 		}
 		&.dice-type--prof {
@@ -101,6 +190,5 @@ $symbol-size: 27px;
 			img { width: $symbol-size + 11px; }
 		}
 	}
-
 }
 
