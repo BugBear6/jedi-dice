@@ -1,20 +1,18 @@
-@import 'shape';
-
 .results-screen {
 	position: absolute;
-	background: black;
-	opacity: .7;
+	background: rgba(0, 0, 0, 0.8);
 	height: 100%;
 	width: 100%;
 	top: 0;
 	left: 0;
 	z-index: 20;
-	&__dice-rolled {
-
+	&__holder {
+		padding: 30px 20px;
 	}
 	&__rolled {
 		list-style: none;
-		display: flex;
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 	}
 	&__final {
 		list-style: none;
@@ -22,31 +20,87 @@
 	}
 }
 
+$dice-size: 65px;
+$symbol-size: 27px;
+
 .dice-type {
 	color: #fff;
+	width: 100%;
+	height: $dice-size;
+	background-size: contain;
+    background-position: center center;
+	background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	&__symbol {
+		width: $symbol-size;
+		&--despair,
+		&--failure {
+			transform: rotate(180deg);
+		}
+	}
 	&--boost {
-		background: lightblue;
+		background-image: url('../../../img/dice-shapes/boost.png');
+		order: 1;
 	}
 	&--setback {
-		background: black;
+		background-image: url('../../../img/dice-shapes/setback.png');
+		order: 2;
+		.dice-type__symbol { filter: invert(100%); }		
 	}
 	&--ab {
-
-	}
-	&--ch {
-
-	}
-	&--d10 {
-		background: violet;
+		background-image: url('../../../img/dice-shapes/ab.png');
+		order: 3;
+		padding-top: 17px;
 	}
 	&--dif {
-		background: darkblue;
+		background-image: url('../../../img/dice-shapes/dif.png');
+		order: 4;
+		padding-top: 10px;
+		.dice-type__symbol { filter: invert(100%); }
 	}
 	&--prof {
-
+		background-image: url('../../../img/dice-shapes/prof.png');
+		order: 5;
+	}
+	&--ch {
+		background-image: url('../../../img/dice-shapes/ch.png');
+		order: 6;
+		.dice-type__symbol { filter: invert(100%); }
 	}
 	&--force {
-
+		background-image: url('../../../img/dice-shapes/force.png');
+		order: 7;
 	}
+	&--d10 {
+		background-image: url('../../../img/dice-shapes/d10.png');
+		order: 8;
+	}
+	&.symbols-double {
+		&.dice-type--boost {
+			img:first-of-type { transform: translate(-7px, 4px); }
+			img:last-of-type { transform: translate(8px, -3px); }
+		}
+		&.dice-type--ab,
+		&.dice-type--dif {
+			img { width: $symbol-size - 7px; }
+			img:last-of-type { margin-top: -4px; }
+		}
+		&.dice-type--prof {
+			img:first-of-type {
+				margin-bottom: -4px;
+				margin-top: 8px;
+			}
+		}
+	}
+	&.symbols-one {
+		&.dice-type--prof,
+		&.dice-type--ch {
+			img { width: $symbol-size + 11px; }
+		}
+	}
+
 }
 

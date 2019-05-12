@@ -10,31 +10,34 @@
 	border: 0;
 	text-transform: uppercase;
 	font-size: 16px;
-    padding: 10px 20px;
-    height: 40px;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    opacity: .9;
+	padding: 10px 20px;
+	height: 40px;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	opacity: .9;
+	cursor: pointer;
 	&--roll {
 		background: lightgreen;
 		color: #fff;
 		text-align: center;
-        font-size: 18px;
-        padding: 10px 40px;
-        &:hover, &:active, &:focus { opacity: 1; }
+		font-size: 18px;
+		padding: 10px 40px;
+		&:hover, &:active, &:focus { opacity: 1; }
+		@media (min-width: 560px) {
+			padding: 10px 140px;
+		}
 	}
 	&--reset {
-        background: #b8341b;
-        color: white;
-        opacity: .5;
-        &:hover, &:active, &:focus { opacity: .8; }
-    }
+		background: #b8341b;
+		color: white;
+		opacity: .5;
+		&:hover, &:active, &:focus { opacity: .8; }
+	}
 	&--reroll {
-        background: #ddd;
-        color: black;
-        opacity: .5;
-        &:hover, &:active, &:focus { opacity: .8; }
-	}	
+		background: #ddd;
+		color: black;
+		opacity: .5;
+		&:hover, &:active, &:focus { opacity: .8; }
+	}
 }
-

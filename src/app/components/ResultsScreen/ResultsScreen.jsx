@@ -20,41 +20,34 @@ const symbolsImg = {
 	triumph
 };
 
-const getShapeClass = diceType => {
-	let shape = 'shape shape--';
-	const shapes = {
-		boost: 'square',
-		setback: 'square',
-		ab: 'triangle-up',
-		ch: 'triangle-up',
-		d10: 'diamond-narrow',
-		dif: 'pentagon',
-		prof: 'pentagon',
-		force: 'pentagon'
-	};
-	return shape + shapes[diceType.toLowerCase()];
-};
-
 const getTypeClass = (diceType) => {
 	return `dice-type dice-type--${diceType.toLowerCase()}`;
 }
 
-const getClass = diceType => {
-	console.log('getClass => diceType', diceType)
-	const shape = getShapeClass(diceType);
+const getClass = ({diceType, result}) => {
 	const type = getTypeClass(diceType);
-	return `${shape} ${type}`;
+	const symbolsNumber = result.split(',').length > 1 ? 'symbols-double' : 'symbols-one';
+	return `${type} ${symbolsNumber}`;
 }
 
 const DiceRolled = ({dicesRolledArray}) => {
+	console.log('dicesRolledArray', dicesRolledArray)
 	return (
 		<>
 		{
-			dicesRolledArray.map((diceRolled, index) => (
+			dicesRolledArray.map((diceRolled, indexDice) => (
 				<li
-					key={index}
-					className={ `results-screen__dice-rolled ${getClass(diceRolled.diceType)}` }
-					>{diceRolled.diceType}
+					key={indexDice}
+					className={ `results-screen__dice-rolled ${getClass(diceRolled)}` } >
+					{
+						diceRolled.result.split(',').map((symbol, indexSymbol) => (
+							<img
+								className={`dice-type__symbol dice-type__symbol--${symbol}`}
+								key={indexSymbol}
+								src={symbolsImg[symbol]}
+							/>
+						))
+					}
 				</li>
 			))
 		}
