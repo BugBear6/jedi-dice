@@ -13,7 +13,8 @@ class JediDice extends React.Component {
 				roll: [],
 				final: {}
 			},
-			dicesSelected: []
+			dicesSelected: [],
+			prevRollDices: []
 		};
 	}
 
@@ -28,11 +29,16 @@ class JediDice extends React.Component {
 		'D10'
 	];
 
-	selectDice = (diceType) => {
+	selectDice = diceType => {
 		const dicesSelectedCopy = [...this.state.dicesSelected];
 		const indexOfType = dicesSelectedCopy.findIndex(el => el.diceType === diceType);
+		const maxTimes = 9;
+
 		if (indexOfType > -1) {
-			dicesSelectedCopy[indexOfType].times += 1
+			const currentTimes = dicesSelectedCopy[indexOfType].times;
+			dicesSelectedCopy[indexOfType].times = currentTimes >= maxTimes 
+				? maxTimes
+				: currentTimes + 1;
 		} else {
 			dicesSelectedCopy.push({
 				diceType,
@@ -45,15 +51,27 @@ class JediDice extends React.Component {
 	}
 
 	rollDice = () => {
-		const roll = this.getRoll();
+		const dicesSelected = [...this.state.dicesSelected];
+		const roll = this.getRoll(dicesSelected);
 		const final = this.getFinal(roll);
-
-		console.log('roll', roll)
-		console.log('final', final)
 		this.setState({
-			rollResult : {
+			rollResult: {
 				roll,
-				final
+				final,
+			}, 
+			prevRollDices: [...this.state.dicesSelected]
+		});
+	}
+
+	reroll = () => {
+		console.log('reroll')
+		const dicesSelected = [...this.state.prevRollDices];
+		const roll = this.getRoll(dicesSelected);
+		const final = this.getFinal(roll);
+		this.setState({
+			rollResult: {
+				roll,
+				final,
 			}
 		});
 	}
@@ -61,8 +79,8 @@ class JediDice extends React.Component {
 	/**
 	 * @returns Array
 	 */
-	getRoll = () => {
-		return this.state.dicesSelected.map((diceObj) => {
+	getRoll = dicesSelected => {
+		return dicesSelected.map((diceObj) => {
 			const dice = buildDice(diceObj.diceType);
 			return dice.roll().times(diceObj.times);
 		});
@@ -149,7 +167,10 @@ class JediDice extends React.Component {
 				</div>
 				<ButtonsBar
 					rollDice={this.rollDice}
-					reset={this.reset} />
+					reroll={this.reroll}
+					reset={this.reset}
+					dicesSelected={this.state.dicesSelected}
+					prevRollDices={this.state.prevRollDices} />
 			</div>
 		);
 	}

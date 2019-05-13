@@ -17,8 +17,12 @@
 	align-items: center;
 	opacity: .9;
 	cursor: pointer;
+	&[disabled] {
+		opacity: .5;
+		pointer-events: none;
+	}
 	&--roll {
-		background: lightgreen;
+		background: $sw-green;
 		color: #fff;
 		text-align: center;
 		font-size: 18px;
@@ -31,13 +35,11 @@
 	&--reset {
 		background: #b8341b;
 		color: white;
-		opacity: .5;
 		&:hover, &:active, &:focus { opacity: .8; }
 	}
 	&--reroll {
 		background: #ddd;
 		color: black;
-		opacity: .5;
 		&:hover, &:active, &:focus { opacity: .8; }
 	}
 }
