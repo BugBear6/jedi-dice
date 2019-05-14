@@ -32,6 +32,20 @@ const getClass = ({diceType, result}) => {
 	return `${type} ${symbolsNumber}`;
 }
 
+const DiceImg = ({symbol, indexSymbol}) => (
+	<>
+		{
+			symbol === 'blank'
+				? <span></span>
+				: <img
+					alt="symbol"
+					className={`dice-type__symbol dice-type__symbol--${symbol}`}
+					key={indexSymbol}
+					src={symbolsImg[symbol]} />
+		}
+	</>
+);
+
 const DiceRolled = ({dicesRolledArray}) => {
 	return (
 		<>
@@ -44,10 +58,10 @@ const DiceRolled = ({dicesRolledArray}) => {
 						diceRolled.result.split(',').map((symbol, indexSymbol) => (
 							diceRolled.diceType === 'D10' && diceRolled.result !== ''
 							? <span key={indexSymbol}>{symbol}</span>
-							: <img
-								className={`dice-type__symbol dice-type__symbol--${symbol}`}
+							: <DiceImg 
 								key={indexSymbol}
-								src={symbolsImg[symbol]} />
+								symbol={symbol}
+								indexSymbol={indexSymbol} />
 						))
 					}
 				</li>
